@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>超体 PMO Skills · 完整交付文档</title>
+<style>
+:root{
+  --blue:#007aff; --blue-weak:rgba(0,122,255,0.08);
+  --green:#34c759; --green-weak:rgba(52,199,89,0.10);
+  --orange:#ff9500; --orange-weak:rgba(255,149,0,0.10);
+  --red:#ff3b30; --red-weak:rgba(255,59,48,0.08);
+  --teal:#5ac8fa;
+  --ink:#1c1c1e; --muted:#8e8e93; --gray:#aeaeb2;
+  --bg:#f2f2f7; --card:#ffffff; --card2:#f9f9fb;
+  --sep:#e5e5ea; --sep2:rgba(60,60,67,0.29);
+  --radius:18px; --radius-sm:12px;
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,"PingFang SC",monospace;
+  --shadow:0 1px 3px rgba(0,0,0,0.05),0 6px 24px rgba(0,0,0,0.05);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--ink);background:var(--bg);line-height:1.75;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.wrap{max-width:880px;margin:0 auto;padding:0 20px 80px}
+
+/* Header */
+.header{padding:64px 0 28px;text-align:center}
+.header .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.14em;color:var(--blue);text-transform:uppercase;margin-bottom:18px}
+.header .eyebrow .dot{width:8px;height:8px;border-radius:50%;background:var(--blue)}
+.header h1{font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.15}
+.header .sub{margin-top:14px;color:var(--muted);font-size:16px}
+.header .meta{margin-top:22px;font-size:13px;color:var(--muted);font-family:var(--mono)}
+.header .rule{width:44px;height:4px;background:var(--blue);border-radius:2px;margin:22px auto 0}
+
+/* TOC */
+.toc{background:var(--card);border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow);margin-bottom:20px}
+.toc h2{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.toc ol{list-style:none;counter-reset:toc}
+.toc li{counter-increment:toc;border-bottom:1px solid var(--sep);padding:12px 0}
+.toc li:last-child{border-bottom:none}
+.toc a{display:flex;align-items:center;gap:14px;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px}
+.toc a:hover{color:var(--blue)}
+.toc li::before{counter-increment:none;content:counter(toc,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--blue);background:var(--blue-weak);border-radius:8px;padding:3px 9px;font-weight:700}
+.toc .sub{margin-left:auto;font-size:12px;font-weight:400;color:var(--gray)}
+
+/* Section */
+section{margin-top:44px}
+.sec-head{margin-bottom:20px;padding-top:8px}
+.sec-head .num{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:700;color:var(--blue);letter-spacing:.1em;text-transform:uppercase}
+.sec-head h2{font-size:27px;font-weight:800;letter-spacing:-.02em;margin-top:8px;line-height:1.25}
+.sec-head .desc{color:var(--muted);font-size:14.5px;margin-top:8px}
+
+/* Card */
+.card{background:var(--card);border-radius:var(--radius);padding:26px 28px;box-shadow:var(--shadow);margin-bottom:16px}
+.card h3{font-size:17px;font-weight:700;margin-bottom:10px;letter-spacing:-.01em}
+.card p{font-size:14.5px;color:var(--ink);margin-bottom:10px;text-align:justify}
+.card p:last-child{margin-bottom:0}
+.card strong{color:var(--ink);font-weight:700}
+.lead{font-size:14.5px}
+
+/* Callout */
+.callout{border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:14px;background:var(--blue-weak)}
+.callout .t{font-weight:700;color:var(--blue);display:block;margin-bottom:5px;font-size:13px}
+.callout.warm{background:var(--orange-weak)} .callout.warm .t{color:var(--orange)}
+.callout.green{background:var(--green-weak)} .callout.green .t{color:var(--green)}
+
+/* Pills */
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 10px;border-radius:20px;white-space:nowrap;font-family:var(--mono)}
+.pill.blue{background:var(--blue-weak);color:var(--blue)}
+.pill.green{background:var(--green-weak);color:var(--green)}
+.pill.orange{background:var(--orange-weak);color:var(--orange)}
+.pill.red{background:var(--red-weak);color:var(--red)}
+.pill.gray{background:#f1f1f2;color:var(--muted)}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.kpi{background:var(--card2);border-radius:var(--radius-sm);padding:18px 16px}
+.kpi .n{font-size:28px;font-weight:800;font-family:var(--mono);color:var(--blue);letter-spacing:-.02em}
+.kpi .l{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+
+/* Table (iOS style) */
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:14px 0;background:var(--card2);border-radius:var(--radius-sm);overflow:hidden}
+th{font-size:12px;font-weight:600;color:var(--muted);text-align:left;padding:11px 14px;border-bottom:1px solid var(--sep);background:transparent;letter-spacing:.02em}
+td{padding:12px 14px;border-bottom:1px solid var(--sep);vertical-align:top;color:var(--ink)}
+tr:last-child td{border-bottom:none}
+td.mono,th.mono{font-family:var(--mono);font-size:12px}
+td code,table code{font-family:var(--mono);font-size:12px;background:var(--blue-weak);color:var(--blue);padding:1px 6px;border-radius:5px}
+.table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* Lists */
+ul.clean{list-style:none;margin:10px 0}
+ul.clean li{position:relative;padding-left:22px;margin-bottom:9px;font-size:14.5px}
+ul.clean li::before{content:'';position:absolute;left:4px;top:9px;width:7px;height:7px;border-radius:50%;background:var(--blue)}
+
+/* Architecture diagram (pure CSS) */
+.arch{display:flex;flex-direction:column;align-items:center;gap:6px;margin:16px 0;padding:24px 16px;background:var(--card2);border-radius:var(--radius);border:1px solid var(--sep)}
+.arch-node{background:var(--card);border-radius:var(--radius-sm);padding:12px 18px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,0.05);border:1px solid var(--sep)}
+.arch-node .name{font-family:var(--mono);font-weight:700;font-size:13.5px;color:var(--ink)}
+.arch-node .role{font-size:12px;color:var(--muted);margin-top:2px}
+.arch-node.core{background:var(--blue);border-color:var(--blue)}
+.arch-node.core .name{color:#fff}.arch-node.core .role{color:rgba(255,255,255,.8)}
+.arch-node.guard{background:var(--orange-weak);border-color:var(--orange)}
+.arch-node.guard .role{color:var(--orange)}
+.arch-node.db{background:var(--green-weak);border-color:var(--green)}
+.arch-node.db .role{color:var(--green)}
+.arch-node.qc{background:var(--red-weak);border-color:var(--red)}
+.arch-node.qc .role{color:var(--red)}
+.arch-arrow{color:var(--gray);font-size:13px;font-family:var(--mono);line-height:1.3;text-align:center}
+.arch-arrow.dashed{color:var(--gray)}
+.arch-row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;width:100%}
+.arch-lane{width:100%;border-top:1px dashed var(--sep2);padding-top:4px}
+.arch-lane .lane-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;text-align:center;margin-bottom:8px}
+.arch figcaption{font-size:12.5px;color:var(--muted);text-align:center;margin-top:10px}
+
+/* Flow steps (horizontal) */
+.flow{display:flex;gap:8px;align-items:stretch;flex-wrap:wrap;margin:14px 0}
+.flow-step{flex:1;min-width:100px;background:var(--card2);border-radius:var(--radius-sm);padding:14px 12px;text-align:center;border:1px solid var(--sep)}
+.flow-step .fn{font-family:var(--mono);font-weight:700;font-size:12.5px;color:var(--blue)}
+.flow-step .fd{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5}
+.flow-arrow{align-self:center;color:var(--gray);font-size:18px;font-weight:700}
+.flow-branch{width:100%;text-align:center;font-size:12.5px;color:var(--muted);font-family:var(--mono);margin-top:4px}
+
+/* Feature */
+.feature{border-radius:var(--radius);background:var(--card);box-shadow:var(--shadow);padding:24px 26px;margin-bottom:16px}
+.feature .fhead{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.feature .fnum{width:28px;height:28px;border-radius:8px;background:var(--blue);color:#fff;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;font-family:var(--mono);flex-shrink:0}
+.feature .ftitle{font-size:16.5px;font-weight:700}
+.feature .ftags{margin-left:auto;display:flex;gap:6px}
+.feature p{font-size:14px;color:var(--ink);margin-bottom:10px;text-align:justify}
+.feature .chain{background:var(--card2);border-radius:var(--radius-sm);padding:12px 16px;font-size:13.5px;color:var(--ink);margin:6px 0}
+.feature .chain b{color:var(--blue);font-weight:700}
+
+/* Post card */
+.post{background:var(--card);border-radius:var(--radius);padding:30px 30px;margin-bottom:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.post::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--teal))}
+.post .pindex{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.08em;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.post h3{font-size:22px;font-weight:800;line-height:1.35;margin-bottom:8px;letter-spacing:-.01em}
+.post .alt{font-size:13px;color:var(--muted);margin-bottom:18px}
+.post .alt b{color:var(--orange);font-weight:600}
+.post .slabel{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.08em;text-transform:uppercase;margin:20px 0 8px}
+.post .leadline{font-size:14.5px;color:var(--ink);border-left:3px solid var(--blue);padding-left:13px}
+.post ol{list-style:none;counter-reset:p;padding-left:0}
+.post ol>li{counter-increment:p;position:relative;padding-left:34px;margin-bottom:12px;font-size:14.5px}
+.post ol>li::before{content:counter(p);position:absolute;left:0;top:2px;width:22px;height:22px;border-radius:7px;background:var(--card2);border:1px solid var(--sep);color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.post ol>li b{color:var(--ink)}
+.post ol>li p{color:var(--muted);font-size:13.5px;margin-top:2px}
+.quote{background:var(--card2);border-radius:var(--radius-sm);padding:14px 18px;margin:14px 0;font-size:14.5px;color:var(--ink)}
+.quote::before{content:'“';color:var(--blue);font-weight:800;margin-right:4px}
+.quote::after{content:'”';color:var(--blue);font-weight:800;margin-left:4px}
+.cta{margin-top:16px;font-size:13.5px;color:var(--orange);font-weight:700;display:flex;align-items:center;gap:8px}
+
+/* Scenario */
+.scenario{background:var(--card);border-radius:var(--radius);padding:26px 28px;margin-bottom:20px;box-shadow:var(--shadow)}
+.scenario .shead{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+.scenario .sidx{width:36px;height:36px;border-radius:10px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;flex-shrink:0}
+.scenario h3{font-size:18px;font-weight:750;line-height:1.4;letter-spacing:-.01em}
+.scenario .persona{font-size:12px;color:var(--orange);font-weight:600;margin-top:3px}
+.pain{background:var(--card2);border-radius:var(--radius-sm);padding:14px 16px;font-size:13.5px;margin:12px 0}
+.pain b{color:var(--orange)}
+.flowtitle{font-size:13px;font-weight:700;color:var(--blue);margin:16px 0 8px;letter-spacing:.04em}
+ol.flowsteps{list-style:none;counter-reset:s;padding-left:0}
+ol.flowsteps>li{counter-increment:s;position:relative;padding-left:34px;margin-bottom:8px;font-size:14px}
+ol.flowsteps>li::before{content:counter(s);position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:7px;background:var(--card2);border:1px solid var(--sep);color:var(--blue);font-family:var(--mono);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.agent-title{font-size:13px;font-weight:700;color:var(--blue);margin:16px 0 10px;letter-spacing:.04em}
+.agent-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.agent-item{background:var(--card2);border-radius:var(--radius-sm);padding:12px 14px}
+.agent-item .an{font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--blue);display:block;margin-bottom:3px}
+.agent-item .ad{color:var(--muted);font-size:12.5px;line-height:1.5}
+.outcome{margin-top:14px;padding:12px 16px;border-radius:var(--radius-sm);font-size:13.5px;background:var(--green-weak)}
+.outcome b{color:var(--green)}
+
+.layer-note{background:var(--card2);border-left:3px solid var(--blue);border-radius:var(--radius-sm);padding:13px 16px;margin:18px 0 12px;font-size:14px}
+.layer-note b{color:var(--blue)}
+.layer-note.orange{border-left-color:var(--orange)}.layer-note.orange b{color:var(--orange)}
+.layer-note.green{border-left-color:var(--green)}.layer-note.green b{color:var(--green)}
+td.repo{font-family:var(--mono);font-size:12.5px;color:var(--blue);white-space:nowrap}
+td.repo a{color:var(--blue);text-decoration:none}td.repo a:hover{text-decoration:underline}
+
+/* Footer */
+.footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:56px;padding-top:24px;border-top:1px solid var(--sep2)}
+
+/* Divider between parts */
+.part-divider{display:flex;align-items:center;gap:16px;margin:56px 0 8px}
+.part-divider::before,.part-divider::after{content:'';flex:1;height:1px;background:var(--sep2)}
+.part-divider span{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+
+/* ================= 重点标红 & 视觉升级 ================= */
+mark{background:var(--red-weak);color:#c7000b;padding:0 5px;border-radius:5px;font-weight:700;font-style:normal}
+.hl{color:var(--red);font-weight:700}
+.hl-x{color:#c7000b;font-weight:800}
+
+.red-callout{border-radius:var(--radius-sm);padding:16px 18px;margin:14px 0;font-size:14px;background:var(--red-weak);border:1px solid rgba(255,59,48,0.16)}
+.red-callout .t{font-weight:700;color:var(--red);display:block;margin-bottom:5px;font-size:13px}
+
+.kpi.red{background:var(--red-weak)}
+.kpi.red .n{color:var(--red)}
+
+.sec-head{position:relative;padding-left:20px}
+.sec-head::before{content:'';position:absolute;left:0;top:8px;bottom:10px;width:4px;border-radius:2px;background:linear-gradient(180deg,var(--blue),var(--teal))}
+
+table th{background:var(--bg);font-weight:700}
+
+.card,.feature,.post,.scenario{transition:transform .18s ease,box-shadow .18s ease}
+.card:hover,.feature:hover,.post:hover,.scenario:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,0.08)}
+
+/* 顶部玻璃导航 + 读取进度 */
+.topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,0.78);backdrop-filter:saturate(180%) blur(22px);-webkit-backdrop-filter:saturate(180%) blur(22px);border-bottom:1px solid var(--sep)}
+.topbar-inner{max-width:880px;margin:0 auto;padding:9px 24px;display:flex;align-items:center;gap:14px}
+.topbar .brand{font-weight:800;font-size:14px;letter-spacing:-.01em;color:var(--ink);display:flex;align-items:center;gap:8px;white-space:nowrap}
+.topbar .brand::before{content:'';width:9px;height:9px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--teal));flex-shrink:0}
+.topbar nav{display:flex;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.topbar nav::-webkit-scrollbar{display:none}
+.topbar nav a{font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:999px;transition:color .16s,background .16s;white-space:nowrap}
+.topbar nav a:hover{color:var(--blue);background:var(--blue-weak)}
+.topbar nav a.on{color:var(--blue);background:var(--blue-weak)}
+.topbar .progress{position:absolute;left:0;bottom:-1px;height:2px;width:0;background:linear-gradient(90deg,var(--blue),var(--teal),var(--red));transition:width .18s ease;border-radius:2px}
+
+/* 封面柔光 */
+.header{background:radial-gradient(70% 90% at 50% 0%,rgba(0,122,255,0.09),rgba(90,200,250,0.04) 55%,transparent 78%)}
+
+/* 水印 + 防截屏 */
+.watermark{position:fixed;inset:0;z-index:9998;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='160'%3E%3Ctext x='120' y='88' font-size='22' font-weight='600' font-family='-apple-system,PingFang SC,sans-serif' letter-spacing='2' fill='rgba(28,28,30,0.055)' text-anchor='middle' transform='rotate(-24 120 80)'%3ELesile%3C/text%3E%3C/svg%3E");background-repeat:repeat}
+body.blur-on{overflow:hidden}
+body.blur-on .wrap,body.blur-on .topbar{filter:blur(14px);pointer-events:none;user-select:none}
+#shotShield{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:rgba(255,255,255,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#shotShield.show{display:flex}
+#shotShield .box{background:var(--card);border-radius:20px;padding:30px 36px;box-shadow:var(--shadow);text-align:center;max-width:340px;width:calc(100% - 48px);border:1px solid var(--sep)}
+#shotShield .ic{width:52px;height:52px;line-height:52px;border-radius:50%;background:var(--red);color:#fff;font-size:20px;font-weight:800;margin:0 auto 14px}
+#shotShield .m{font-size:16px;font-weight:800;color:var(--ink)}
+#shotShield .s{font-size:13px;color:var(--muted);margin-top:8px}
+
+@media(max-width:640px){
+  .topbar .brand{font-size:0}
+  .topbar .brand::before{width:10px;height:10px}
+  .header h1{font-size:30px}
+  .kpis{grid-template-columns:1fr}
+  .agent-grid{grid-template-columns:1fr}
+  .card,.feature,.post,.scenario,.toc{padding:20px}
+  .flow{flex-direction:column}
+  .flow-arrow{transform:rotate(90deg);align-self:center;margin:2px 0}
+}
+</style>
+</head>
+<body>
+<div class="watermark"></div>
+<div id="shotShield">
+  <div class="box">
+    <div class="ic">禁</div>
+    <div class="m">内容受保护，禁止截屏</div>
+    <div class="s">截图内容已带 Lesile 水印，可追溯</div>
+  </div>
+</div>
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">超体 PMO · 完整交付</span>
+    <nav>
+      <a href="#part1">PRD</a>
+      <a href="#part2">内容策划</a>
+      <a href="#part3">落地清单</a>
+    </nav>
+  </div>
+  <div class="progress"></div>
+</div>
+<div class="wrap">
+
+  <!-- ============ HEADER ============ -->
+  <div class="header">
+    <span class="eyebrow"><span class="dot"></span>超体跃迁 · Skills 市场 · PMO</span>
+    <h1>超体 PMO Skills<br>完整交付文档</h1>
+    <p class="sub">产品需求文档 · 三篇内容策划 · 开源落地清单，一份文档交付</p>
+    <div class="meta">作者：殷南杰（Lesile Yin）· 版本 V1.0（共建期）· 2026-08-25 · 状态：待评审</div>
+    <div class="rule"></div>
+  </div>
+
+  <!-- ============ TOC ============ -->
+  <nav class="toc">
+    <h2>目录</h2>
+    <ol>
+      <li><a href="#part1">PMO Skills 产品需求文档<span class="sub">第一 ~ 十二节</span></a></li>
+      <li><a href="#part2">三篇公众号推送（标题与内容概要）<span class="sub">POST 01 – 03</span></a></li>
+      <li><a href="#part3">Skill 开源落地清单与业务场景<span class="sub">附录 A · B · C</span></a></li>
+    </ol>
+  </nav>
+
+  <!-- ================================================== -->
+  <!-- PART 1 : PRD -->
+  <!-- ================================================== -->
+  <div class="part-divider"><span>第一部分 · PRD</span></div>
+  <section id="part1">
+
+    <!-- 一、需求背景 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 01</span>
+        <h2>需求背景</h2>
+      </div>
+      <div class="card">
+        <p class="lead">超体社区现在有 <strong>1,000+ 会员</strong>，主要是 CXO、创业者、私募金融这条线的人。丹尼在《超体》邀请信里已经讲得很清楚：这些人<strong>都有至少一个值得被 AI 放大的生产函数</strong>，对他们来说，最稀缺的资源不是钱，是<strong>注意力和精力</strong>。</p>
+        <p>但现实是，公司的<strong>项目管理日常，恰恰是吃掉注意力最多的地方</strong>。追进度、读周报、在十几个飞书群里翻关键信息、惦记着哪个供应商还等着你拍板——这些事重复又低杠杆，却实实在在耗掉一个决策者最宝贵的那点精力。</p>
+        <div class="red-callout">
+          <span class="t">PM 判断（关键洞察）</span>
+          现有的项目管理工具（飞书项目、Asana、Jira）死因都一样：<strong>它们要人把数据喂进去</strong>。管理者没空填，下属嫌麻烦不填，工具慢慢就成了摆设。所以 PMO 的第一性原理不是做一块更好看的看板，而是<mark>零录入、自动抓取、主动汇报</mark>——把 PMO 从一套流程软件，变成一位会主动操心的同事。
+        </div>
+      </div>
+    </section>
+
+    <!-- 二、目标用户 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 02</span>
+        <h2>目标用户</h2>
+      </div>
+      <div class="card">
+        <h3>P0 — 创始人 / CXO（核心）</h3>
+        <p>一个人扛多项目决策，信息严重过载，天天在当人肉信息汇总器。他们要的不是更多报表，而是<strong>今天到底有哪几件事需要你拍板</strong>，以及每件事背后的来龙去脉。</p>
+        <h3 style="margin-top:18px">P1 — 创业公司管理者 / 项目负责人</h3>
+        <p>带 5–50 人的团队，周报、对齐进度、向上报风险一样不少，还经常被上面（也就是 P0 那群人）嫌汇报跟不上、信息有截留。</p>
+        <h3 style="margin-top:18px">P2 — 私募 / 金融从业者</h3>
+        <p>盯投后项目和尽调进度，对投入产出特别敏感，最难受的是十几个标的并行推进时，靠人记不住哪个出了岔子。</p>
+      </div>
+    </section>
+
+    <!-- 三、需求目标 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 03</span>
+        <h2>需求目标</h2>
+      </div>
+      <div class="card">
+        <p>把 Founder 从追进度这种低杠杆的事里解放出来，让 AI PMO 自己跑完<strong>抓信息 → 对进度 → 报风险 → 出简报</strong>这一整条链路，人只做<strong>最后确认</strong>这一步。</p>
+        <div class="kpis">
+          <div class="kpi"><div class="n">0</div><div class="l">用户手动录入的操作负担（目标）</div></div>
+          <div class="kpi"><div class="n">3</div><div class="l">每日主动推送「待操心」上限</div></div>
+          <div class="kpi red"><div class="n">95%+</div><div class="l">风险预警召回率（不漏报）</div></div>
+        </div>
+        <p style="font-size:13px;color:var(--muted)">目标目前是定性加半定量，还没跑过真实数据，标成 <code>[待确认]</code>；质检准确率、幻觉率这些 AI 专项指标放在后面的“规则与接入”里。</p>
+      </div>
+    </section>
+
+    <!-- 四、产品定位 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 04</span>
+        <h2>产品定位（一句话）</h2>
+      </div>
+      <div class="card">
+        <div class="red-callout">
+          <span class="t">一句话价值主张</span>
+          超体 PMO 不是又一个项目管理软件，而是装进超体 Skills 市场的第一个企业级 Skill：一位坐在你数据流里的 AI 项目经理，<mark>你不用再一个个去问进度，它会主动告诉你今天该操心什么。</mark>
+        </div>
+      </div>
+    </section>
+
+    <!-- 五、产品形态 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 05</span>
+        <h2>产品形态</h2>
+      </div>
+      <div class="card">
+        <p>超体 PMO 不是独立 App，而是<strong>Agent 加 Skills 市场</strong>的组合：用户在 Web 端有一个 PMO 工作台，背后是多智能体在跑，每个能力都以一个 <strong>Skill</strong> 的形式注册、接入、授权、调用。</p>
+        <p>这个设计正好对上这个岗位的核心命题：<strong>从 0 到 1 搭一个企业级 AI Skills 市场</strong>。PMO 是市场里的<strong class="hl-x">第一个旗舰产品（Flagship Skill）</strong>，用它既验证产品是不是刚需，也顺便把 Skill 接入、质检、分发这条路完整跑一遍。</p>
+      </div>
+    </section>
+
+    <!-- 六、多智能体架构 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 06</span>
+        <h2>多智能体架构</h2>
+        <div class="desc">沿用 LangGraph 的多智能体编排，走 Orchestrator 统筹、专职 Agent 分工的 DAG 结构，每个专职 Agent 都能单独升级、单独挂 Skill。</div>
+      </div>
+
+      <figure class="arch">
+        <div class="arch-node">
+          <div class="name">Founder / CXO</div>
+          <div class="role">人只做收口确认</div>
+        </div>
+        <div class="arch-arrow">↑ 简报推送 · ↓ 决策纠偏</div>
+        <div class="arch-node core">
+          <div class="name">OrchestratorAgent</div>
+          <div class="role">统筹官 · 状态机调度</div>
+        </div>
+        <div class="arch-arrow">指令分发 ↓</div>
+        <div class="arch-row">
+          <div class="arch-node"><div class="name">RetrievalAgent</div><div class="role">检索 · 上下文抽取</div></div>
+          <div class="arch-node"><div class="name">StoryboardAgent</div><div class="role">里程碑计划 · 对比</div></div>
+          <div class="arch-node"><div class="name">RouterAgent</div><div class="role">风险路由</div></div>
+          <div class="arch-node"><div class="name">ScreenwriterAgent</div><div class="role">简报撰稿</div></div>
+        </div>
+        <div class="arch-node qc">
+          <div class="name">QCAgent</div>
+          <div class="role">质检红队 · grill-me 对抗核查</div>
+        </div>
+        <div class="arch-arrow dashed">RetrievalAgent 抽取信号 ⇄ 企业语料库召回上下文</div>
+        <div class="arch-node db">
+          <div class="name">企业语料库</div>
+          <div class="role">RAG · Milvus / PGVector</div>
+        </div>
+        <div class="arch-lane">
+          <div class="lane-label">横切监督</div>
+          <div class="arch-node guard">
+            <div class="name">BadcaseAgent</div>
+            <div class="role">badcase 回放 · 监控 · 熔断回滚（覆盖所有执行 Agent）</div>
+          </div>
+        </div>
+        <figcaption>图 1 · 超体 PMO 多智能体架构（LangGraph DAG 编排）</figcaption>
+      </figure>
+
+      <!-- 6.1 模型路由 -->
+      <div class="card">
+        <h3>6.1 模型路由与工具接入（忠于简历原文）</h3>
+        <p>简历中<strong class="hl-x">唯一把「Agent 名」与「模型」明确写死的一处</strong>是 RouterAgent：<code class="hl-x">RouterAgent → AI GPT-5.6 / Claude Fable 5 / Reasonix</code>，即路由 Agent 在这三个模型间做任务分派（<mark>Bug 修复效率 45%→60%</mark>）。其余 Agent 在简历里只作为<strong>多智能体编排角色</strong>出现，并未各自绑定单一模型——因此下表将「简历原文」与「PMO 场景映射」分开标注，避免把推断写成事实。</p>
+
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>Agent</th><th>承担任务</th><th>模型 / 工具接入</th><th>依据</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">RouterAgent</td><td>风险识别、分级路由</td><td><span class="hl-x">GPT-5.6 / Claude Fable 5 / Reasonix</span> 三模型路由</td><td class="mono hl-x">简历原文</td></tr>
+            <tr><td class="mono">RetrievalAgent</td><td>抽取信号、RAG 检索</td><td>DeepSeek V4 + Milvus/PGVector（bge-reranker）</td><td class="mono">简历原文（RAG 层）</td></tr>
+            <tr><td class="mono">OrchestratorAgent</td><td>统筹调度、状态机</td><td>Claude / Reasonix（强推理）</td><td class="mono">PMO 映射</td></tr>
+            <tr><td class="mono">StoryboardAgent</td><td>里程碑拆解、计划比对</td><td>GPT-5.6 / Gemini 3 Pro（Codex CLI）</td><td class="mono">PMO 映射</td></tr>
+            <tr><td class="mono">ScreenwriterAgent</td><td>简报 / 周报撰稿</td><td>Claude（Claude Code）</td><td class="mono">PMO 映射</td></tr>
+            <tr><td class="mono">QCAgent</td><td>质检、对抗核查</td><td>双模型对抗（复用 grill-me）</td><td class="mono">PMO 映射</td></tr>
+            <tr><td class="mono">BadcaseAgent</td><td>心跳监控、止损兜底</td><td>轻量模型 + trace/metrics/logging + Replay</td><td class="mono">PMO 映射</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <p>成本分级则来自简历的<strong>「模型 ↔ CLI 工具」层</strong>（此处不是 Agent 名，而是编码工具接入）：</p>
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>模型</th><th>简历关联 CLI 工具</th><th>单价（简历原文）</th><th>PMO 用途</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">DeepSeek V4</td><td>Codex CLI</td><td>~$0.03/次（1200+ 次）</td><td>高频跑量：检索、抽取、比对</td></tr>
+            <tr><td class="mono">Claude</td><td>Claude Code</td><td>~$0.6/次（80+ Skills）</td><td>关键研判：简报、风险确认</td></tr>
+            <tr><td class="mono">Codex（GPT 系）</td><td>Codex CLI</td><td>—</td><td>结构化拆解、编码自动化</td></tr>
+            <tr><td class="mono">Reasonix</td><td>独立 CLI / DeepSeek-TUI</td><td>—（+DeepSeek 达 99.82%）</td><td>强推理路由、统筹决策</td></tr>
+            <tr><td class="mono">MiniMax</td><td>Agent（TTS）</td><td>$0.5（vs ElevenLabs $3）</td><td>语音合成，PMO 文本场景不涉及</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 七、Skill 接入协议 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 07</span>
+        <h2>Skill 接入协议（市场底座）</h2>
+        <div class="desc">这是「Skills 市场」得以成立的技术根基——通过 manifest 声明 + MCP 暴露 + 市场统一质检与权限收敛。</div>
+      </div>
+      <figure class="arch">
+        <div class="flow">
+          <div class="flow-step"><div class="fn">Skill 开发者</div><div class="fd">提交 manifest</div></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><div class="fn">市场注册</div><div class="fd">入库待审</div></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><div class="fn" style="color:var(--orange)">多 Agent 质检</div><div class="fd">audit-swarm</div></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><div class="fn">上架 · 可订阅</div><div class="fd">进入市场</div></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><div class="fn">用户授权</div><div class="fd">最小权限</div></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><div class="fn">MCP Tool Call</div><div class="fd">Agent 按需调用</div></div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-step"><div class="fn">调用日志</div><div class="fd">trace / metrics</div></div>
+        </div>
+        <div class="flow-branch">质检未通过 → 退回 Skill 开发者</div>
+        <figcaption>图 2 · Skill 接入全流程（提交 → 质检 → 上架 → 授权 → 调用）</figcaption>
+      </figure>
+    </section>
+
+    <!-- 八、端到端工作逻辑 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 08</span>
+        <h2>端到端工作逻辑</h2>
+        <div class="desc">从「触发」到「推送决策」的完整闭环，监督支路（BadcaseAgent）始终横切主链路。</div>
+      </div>
+      <figure class="arch">
+        <div class="arch-lane" style="border:none;padding:0">
+          <div class="lane-label">① 触发</div>
+          <div class="arch-row">
+            <div class="arch-node"><div class="name">定时任务</div><div class="role">每日 / 每周</div></div>
+            <div class="arch-node"><div class="name">事件触发</div><div class="role">数据源变更 / 里程碑到期</div></div>
+          </div>
+        </div>
+        <div class="arch-arrow">↓</div>
+        <div class="arch-lane">
+          <div class="lane-label">② 主执行链</div>
+          <div class="arch-row">
+            <div class="arch-node core"><div class="name">OrchestratorAgent</div><div class="role">统筹调度</div></div>
+            <div class="arch-arrow" style="align-self:center">→</div>
+            <div class="arch-node"><div class="name">RetrievalAgent</div><div class="role">抽取信号</div></div>
+          </div>
+          <div class="arch-arrow">写入 ⇄ 召回</div>
+          <div class="arch-node db"><div class="name">企业语料库</div><div class="role">RAG · Milvus/PGVector</div></div>
+          <div class="arch-arrow">召回上下文 ↓</div>
+          <div class="arch-row">
+            <div class="arch-node"><div class="name">StoryboardAgent</div><div class="role">计划 vs 实际</div></div>
+            <div class="arch-node"><div class="name">RouterAgent</div><div class="role">停滞 · 阻塞 · 蔓延</div></div>
+          </div>
+          <div class="arch-arrow">↓</div>
+          <div class="arch-row">
+            <div class="arch-node"><div class="name">ScreenwriterAgent</div><div class="role">3 句话简报</div></div>
+            <div class="arch-node qc"><div class="name">QCAgent</div><div class="role">拦截幻觉 · 溯源</div></div>
+          </div>
+        </div>
+        <div class="arch-arrow">通过 ↓ / 拦截 ↺ 重写</div>
+        <div class="arch-lane">
+          <div class="lane-label">③ 收口与决策</div>
+          <div class="arch-node"><div class="name">Founder / CXO</div><div class="role">接收简报 → 决策 → 纠偏回流</div></div>
+        </div>
+        <div class="arch-lane">
+          <div class="lane-label">④ 监督与止损（横切）</div>
+          <div class="arch-node guard"><div class="name">BadcaseAgent</div><div class="role">badcase 回放 · 监控</div></div>
+          <div class="arch-row">
+            <div class="arch-node guard"><div class="name">L1</div><div class="role">数据源超时 · 退避重试</div></div>
+            <div class="arch-node guard"><div class="name">L2</div><div class="role">节点卡点 · 重启/降级</div></div>
+            <div class="arch-node guard"><div class="name">L3</div><div class="role">幻觉 · 转人工不丢弃</div></div>
+            <div class="arch-node guard"><div class="name">L4</div><div class="role">死循环 · 熔断回滚</div></div>
+            <div class="arch-node guard"><div class="name">L5</div><div class="role">全局故障 · 备用模型</div></div>
+          </div>
+        </div>
+        <figcaption>图 3 · PMO Agent 端到端工作逻辑（主执行链 + 监督止损支路）</figcaption>
+      </figure>
+    </section>
+
+    <!-- 九、可复用 Skill 资产映射 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 09</span>
+        <h2>可复用 Skill 资产映射</h2>
+        <div class="desc">以下 80+ Skills 为候选人亲手构建并开源（GitHub: <code>Lesile-Yin/agent-skills</code>，MIT），四个招牌 Skill 直接构成 PMO 能力底座。</div>
+      </div>
+      <div class="card">
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>Skill</th><th>企业场景映射</th><th>简历量化实证</th><th>PMO 角色</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">prompt-forge<span class="pill red" style="margin-left:6px">招牌</span></td><td>Prompt 锻造与调优</td><td>120+ 成熟 Prompt，A/B 58%→87%</td><td>输出质量底座</td></tr>
+            <tr><td class="mono">prism-review<span class="pill red" style="margin-left:6px">招牌</span></td><td>多模型 PR/内容交叉评审</td><td>跨模型对抗，打破「回声室」</td><td>QCAgent</td></tr>
+            <tr><td class="mono">token-warden<span class="pill red" style="margin-left:6px">招牌</span></td><td>Token 预算管控与降本</td><td>精细化成本管控</td><td>成本控制</td></tr>
+            <tr><td class="mono">slide-smith<span class="pill red" style="margin-left:6px">招牌</span></td><td>PPT / 汇报材料自动化</td><td>周报、汇报一键生成</td><td>ScreenwriterAgent 输出层</td></tr>
+            <tr><td class="mono">audit-swarm</td><td>Skill 上架前的多 Agent 审计</td><td>5 模型并行交叉审计</td><td>市场质检</td></tr>
+            <tr><td class="mono">grill-me</td><td>跨模型对抗评审</td><td>拦截幻觉，逐条溯源</td><td>QCAgent</td></tr>
+            <tr><td class="mono">token-saviour</td><td>Token 降本</td><td>token 用量 ↓~70%</td><td>成本控制</td></tr>
+            <tr><td class="mono">caveman</td><td>输出压缩，减少阅读负担</td><td>46K+ Star，token ↓75%</td><td>ScreenwriterAgent</td></tr>
+            <tr><td class="mono">agent-reach / anysearch</td><td>联网补全企业外部信息</td><td>实时外部检索</td><td>RetrievalAgent 扩展</td></tr>
+            <tr><td class="mono">progress-tracker / risk-scanner（新建）</td><td>PMO 专属，进度追踪 + 风险扫描</td><td>——</td><td>核心 PMO 能力</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 十、专有资产与竞争壁垒 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 10</span>
+        <h2>专有资产与竞争壁垒</h2>
+        <div class="desc">产品底座可以开源，但真正的壁垒在「专有资产」——分三层，别人抄不走。</div>
+      </div>
+      <div class="card">
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>资产层</th><th>内容</th><th>可复制性</th><th>定位</th></tr></thead>
+          <tbody>
+            <tr><td><strong>开源底座</strong></td><td>LangGraph / MinerU / Milvus / 飞书 MCP</td><td>人人可装</td><td>落地可行性，非壁垒</td></tr>
+            <tr><td><strong>自研 Skill</strong></td><td>prompt-forge · prism-review · token-warden · slide-smith 等 80+ / 120+ Prompt</td><td>难（招牌 Skill + 领域 know-how）</td><td><mark>能力差异化</mark></td></tr>
+            <tr><td><strong>私有数据 / 规则</strong></td><td>风险规则库、评测集、badcase 库、few-shot 样例</td><td>极低（含商业机密、随数据迭代）</td><td><mark>核心护城河</mark></td></tr>
+          </tbody>
+        </table>
+        </div>
+        <p>壁垒的成立靠四类「别人抄不走」的东西，而不是「代码不公开」这一个动作：</p>
+        <ul class="clean">
+          <li><strong>场景规则库</strong>：针对创始人/私募人群的风险规则——「负责人沉默 &gt; 48h 判停滞」「里程碑连续变更 3 次判范围蔓延」——这是领域 know-how，不是代码。</li>
+          <li><strong>评测集与 badcase 库</strong>：在真实企业数据上迭代出的 QA 数据集与对抗样例，不公开、含商业机密。</li>
+          <li><strong>Prompt 与 few-shot 工程</strong>：grill-me 的对抗话术、caveman 的压缩风格，是反复调优沉淀，抄不走。</li>
+          <li><strong>编排模式</strong>：多 Agent DAG + 人工「收口确认」节点的架构设计 know-how。</li>
+        </ul>
+        <div class="red-callout">
+          <span class="t">壁垒的正确打开方式（重点）</span>
+          竞争力的来源是<mark>「专有 + 随数据持续演进」</mark>的规则与评测资产，而不是「不维护就不可用的黑盒」。前者让对手抄不走、让产品离不开这套沉淀；后者会被解读成单点依赖风险，反成减分项。
+        </div>
+      </div>
+
+      <!-- 候选人核心竞争力 -->
+      <div class="card">
+        <h3>6.1 候选人核心竞争力（简历实证）</h3>
+        <p style="font-size:13.5px;color:var(--muted)">以下数据直接来自简历与作品集，每一条都可溯源、可现场演示——这是「能做出来」与「能说清楚怎么做」的分水岭。</p>
+        <div class="kpis">
+          <div class="kpi red"><div class="n">80+/<br>120+</div><div class="l">自建 Skills / 成熟 Prompt</div></div>
+          <div class="kpi red"><div class="n">92%+</div><div class="l">RAG 检索准确率（Milvus/PGVector + Rerank）</div></div>
+          <div class="kpi red"><div class="n">58%→87%</div><div class="l">A/B 准确率提升</div></div>
+          <div class="kpi red"><div class="n">↓60%</div><div class="l">生成成本（$800→$320）</div></div>
+          <div class="kpi red"><div class="n">~70%</div><div class="l">Token 用量节省（token-saviour）</div></div>
+          <div class="kpi red"><div class="n">35%+</div><div class="l">项目 ROI（50+ AI 项目）</div></div>
+        </div>
+        <p style="font-size:13.5px;color:var(--muted)">技术栈与架构：LangGraph / LangChain / AutoGen 多智能体 DAG 编排（Orchestrator · Screenwriter · Storyboard · QC · Router · Retrieval），全链路基于 MCP 协议接入；模型路由覆盖 DeepSeek / Claude / Gemini / Grok / GPT / Reasonix。</p>
+      </div>
+    </section>
+
+    <!-- 十一、需求详情 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 11</span>
+        <h2>需求详情</h2>
+        <div class="desc">六项核心功能，每项遵循「触发器 → 处理规则 → 输出结果 → 状态变化」的完整链路。</div>
+      </div>
+
+      <div class="feature" id="f1">
+        <div class="fhead"><div class="fnum">1</div><div class="ftitle">上下文自动接入（零录入）</div><div class="ftags"><span class="pill blue">P0</span></div></div>
+        <p>管理者最顽固、最深的痛点是信息太散、又没人愿意录。RetrievalAgent 只读接入飞书群、邮件、日历和文档，<strong>自动抽</strong>跟项目有关的信号：谁提了里程碑、谁更新了进度、哪场会议的结论跟交付有关。</p>
+        <div class="chain"><b>触发器</b>：数据源产生增量（新消息、新邮件、日程变更、文档更新）。<b>处理规则</b>：Agent 做实体识别与项目归属判定，将零散文本抽取为结构化信号（项目、里程碑、责任人、动作、时间），写入企业语料库；无法判定归属的信号进「待归类」队列而非丢弃。<b>输出</b>：项目页「上下文流」。<b>状态变化</b>：未处理 → 已抽取 → 待关联/已关联。</div>
+        <p>权限上，RetrievalAgent 仅申请<strong>只读</strong>权限，且用户可关闭任意数据源。这是<mark>「零录入」体验的根基，也是产品与通用 PM 工具最大的分野</mark>。</p>
+      </div>
+
+      <div class="feature" id="f2">
+        <div class="fhead"><div class="fnum">2</div><div class="ftitle">进度追踪与停滞识别</div><div class="ftags"><span class="pill blue">P0</span></div></div>
+        <p>StoryboardAgent 持续对比计划和实际，识别延期与停滞。它不让负责人手动报进度，而是从上下文信号里<strong>反推</strong>实际进度，再跟里程碑计划算偏差。</p>
+        <div class="chain"><b>触发器</b>：里程碑到期临近，或某环节超过设定阈值（如 48 小时无新信号）仍无进展。<b>处理规则</b>：计算偏差率；容差内「正常」，超出「关注」，连续停滞超阈值升级「停滞」。<b>输出</b>：健康度条形图 + 「计划 vs 实际」分项。<b>状态变化</b>：正常 → 关注 → 停滞 → 已干预。</div>
+        <p>停滞识别是 <mark>PMO 价值的核心</mark>，因为它把「负责人沉默」这种<mark>最隐蔽的风险显性化</mark>了——这正是创始人最需要的「有人替我看门」。</p>
+      </div>
+
+      <div class="feature" id="f3">
+        <div class="fhead"><div class="fnum">3</div><div class="ftitle">风险预警与主动推送</div><div class="ftags"><span class="pill blue">P0</span></div></div>
+        <p>RouterAgent 识别<strong>阻塞、责任人不明、交付延迟、范围蔓延</strong>四类风险信号，主动推到工作台“今日该你操心”那一栏，而不是等着用户打开系统自己找。</p>
+        <div class="chain"><b>触发器</b>：任一风险信号被命中。<b>处理规则</b>：按影响面 + 紧迫度评估风险等级（高/中/低），召回优先（宁可多报不漏报），低置信风险进「观察」而非直接推送。<b>输出</b>：风险卡片，含风险说明 + 信号源 + 建议动作。<b>状态变化</b>：预警 → 已读 → 已分配 → 已闭环。</div>
+        <p>每日主动推送的「待操心事项」上限为 3 条，避免把创始人重新淹没在提醒洪流里——<strong class="hl-x">克制本身就是产品设计</strong>。</p>
+      </div>
+
+      <div class="feature" id="f4">
+        <div class="fhead"><div class="fnum">4</div><div class="ftitle">决策简报与周报生成</div><div class="ftags"><span class="pill blue">P0</span></div></div>
+        <p>ScreenwriterAgent 把多个项目的状态、风险、待拍板事项，压成创始人看得完的三句话简报和周报。输出按<strong>结论先行、证据支撑、待决策项</strong>这个顺序来，而不是堆数据。</p>
+        <div class="chain"><b>触发器</b>：用户请求或定时（每日早间、每周一）。<b>处理规则</b>：聚合各 Agent 输出，按重要性排序，套用 caveman 式压缩风格削减冗余；所有结论必须携带来源引用，无法溯源的推断不得进入简报。<b>输出</b>：一键转为文档/消息，发送前经 QCAgent 核查。<b>状态变化</b>：草稿 → 待核查 → 待确认 → 已发送。</div>
+        <p>对 P0 用户而言，<mark>简报是产品的「最后一百米」</mark>——它必须可溯源、可点击下钻，避免变成一个「看似聪明但不负责」的黑盒。</p>
+      </div>
+
+      <div class="feature" id="f5">
+        <div class="fhead"><div class="fnum">5</div><div class="ftitle">Skills 市场与 Skill 订阅</div><div class="ftags"><span class="pill blue">P0</span></div></div>
+        <p>市场的核心是让用户像开订阅一样<strong>按需接入</strong> Skill，而不是一下买一堆功能。PMO 的能力拆成 progress-tracker、risk-scanner、brief-generator 这些 Skill，每个都能单独开关、单独授权。</p>
+        <div class="chain"><b>触发器</b>：用户浏览市场、点击「接入」某个 Skill。<b>处理规则</b>：弹出授权页，明确列出该 Skill 需要读取的数据源与权限范围，遵循最小权限原则；授权后 Skill 立即进入 Agent 的可调用工具集。<b>输出</b>：工作台出现该 Skill 对应的 Agent 模块。<b>状态变化</b>：未接入 → 待授权 → 运行中 → 已停用。</div>
+        <p>这一设计让「企业级 Skills 市场」从一个概念，落成一个可增长的商业模型：<strong class="hl-x">每个 Skill 都是可计费、可分发的资产</strong>。</p>
+      </div>
+
+      <div class="feature" id="f6">
+        <div class="fhead"><div class="fnum">6</div><div class="ftitle">质检红队（防幻觉）</div><div class="ftags"><span class="pill blue">P1</span></div></div>
+        <p>企业场景对可信的要求近乎苛刻。QCAgent 复用 grill-me 跨模型对打的思路，对 ScreenwriterAgent 的每一份输出做<strong>逐条溯源</strong>，防止模型把猜测当成事实写进简报。</p>
+        <div class="chain"><b>触发器</b>：ScreenwriterAgent 产出简报。<b>处理规则</b>：逐条校验结论是否有来源引用；置信度低于阈值的条目被拦截，标注「需人工确认」而非直接删除。<b>输出</b>：通过 / 拦截清单。<b>状态变化</b>：待核查 → 通过/拦截 → 人工复核。</div>
+        <p>这一步虽然增加延迟，但它是产品面对高净值用户时<strong class="hl-x">建立信任的护城河</strong>——一次错误的汇报，代价远高于一次延迟。</p>
+      </div>
+    </section>
+
+    <!-- 十二、规则与接入 -->
+    <section>
+      <div class="sec-head">
+        <span class="num">§ 12</span>
+        <h2>规则与接入</h2>
+      </div>
+
+      <div class="card">
+        <h3>一、Skill 清单（manifest）规范</h3>
+        <p style="font-size:13.5px;color:var(--muted)">每个上架市场的 Skill 必须声明以下字段，缺一不可：</p>
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>字段</th><th>类型</th><th>说明</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">name</td><td>text</td><td>全局唯一标识，如 <code>risk-scanner</code></td></tr>
+            <tr><td class="mono">version</td><td>semver</td><td>语义化版本</td></tr>
+            <tr><td class="mono">description</td><td>text</td><td>一句话能力说明（给用户看）</td></tr>
+            <tr><td class="mono">inputs / outputs</td><td>schema</td><td>输入输出结构，供 MCP tool call 校验</td></tr>
+            <tr><td class="mono">permissions</td><td>list</td><td>所需数据源与权限范围（最小权限）</td></tr>
+            <tr><td class="mono">model_requirement</td><td>text</td><td>最低模型能力要求（如 GPT-5.5 / Opus 4.8）</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>二、AI 专项指标与降级</h3>
+        <p style="font-size:13.5px;color:var(--muted)">作为 AI 产品，必须显式定义质量目标（数值为初期预估，标注 [待上线校准]）：</p>
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>指标</th><th>目标值</th><th>降级机制</th></tr></thead>
+          <tbody>
+            <tr><td>风险预警召回率</td><td>≥ 95%（不漏报优先）</td><td>低置信风险转「观察」，人工抽查</td></tr>
+            <tr><td>简报幻觉率</td><td>&lt; 1%</td><td>无来源引用条目一律拦截</td></tr>
+            <tr><td>Agent 单次运行成本</td><td>受控（token-saviour 路由）</td><td>Router 按任务类型选最低可用模型</td></tr>
+            <tr><td>信号实体识别准确率</td><td>≥ 90%</td><td>低置信信号进「待归类」人工确认</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>三、权限与数据隔离</h3>
+        <p>面向企业/高净值用户，数据安全是底线。所有 Skill 遵循<strong>最小权限 + 只读优先</strong>；企业语料库按租户隔离；Agent 调用全程留痕（trace / metrics / logging），支持审计回溯。</p>
+      </div>
+
+      <div class="card">
+        <h3>四、监督 Agent 与止损机制</h3>
+        <p>PMO 能稳定跑，不是靠相信每个 Agent 都不出错，而是靠<mark>一个横切的监督 Agent（BadcaseAgent）在边界兜底</mark>。它盯着所有执行 Agent 的心跳和输出，抓<strong>卡点（没进展）</strong>和<strong>报错（异常、幻觉）</strong>，再触发<mark>分级降级与止损</mark>。</p>
+
+        <h3 style="font-size:15px;margin-top:16px">4.1 监督 Agent 如何设置</h3>
+        <p>BadcaseAgent 不干业务，只做三件事：<strong>① 心跳监控</strong>，每个子 Agent 在 LangGraph 节点里注册心跳，由它记录执行时长，超时就判卡点；<strong>② 错误捕获</strong>，拦下基础设施错误（API 超时、限流）、模型错误（幻觉、低置信）和编排错误（死循环、依赖缺失）；<strong>③ 分级响应</strong>，按下面的表把异常映射到对应的止损动作。</p>
+
+        <h3 style="font-size:15px;margin-top:16px">4.2 卡点 / 报错的分级应对</h3>
+        <div class="table-scroll">
+        <table>
+          <thead><tr><th>级别</th><th>异常表现</th><th>应对方案</th><th>止损动作</th></tr></thead>
+          <tbody>
+            <tr><td><strong class="hl-x">L1</strong></td><td>数据源暂时不可用（飞书/邮件 API 超时、限流）</td><td>指数退避重试 3 次</td><td class="hl">仍失败则该源标「暂停」，用缓存兜底</td></tr>
+            <tr><td><strong class="hl-x">L2</strong></td><td>单节点超时 / 卡点（某 Agent 超阈值无进展）</td><td>中断该节点，重启一次</td><td class="hl">二次卡点则跳过该节点，降级输出并标注</td></tr>
+            <tr><td><strong class="hl-x">L3</strong></td><td>输出置信度不足（幻觉、无来源引用）</td><td>QCAgent 拦截，不进简报</td><td class="hl">转「待人工确认」，绝不静默丢弃</td></tr>
+            <tr><td><strong class="hl-x">L4</strong></td><td>编排级循环（状态机死循环、依赖缺失）</td><td>Orchestrator 熔断，回滚检查点</td><td class="hl">回滚到最近检查点，保留上下文</td></tr>
+            <tr><td><strong class="hl-x">L5</strong></td><td>全局故障（模型服务整体不可用）</td><td>切换备用模型 / 备用路由</td><td class="hl">降级到「只读汇总」，暂停主动推送</td></tr>
+          </tbody>
+        </table>
+        </div>
+
+        <h3 style="font-size:15px;margin-top:16px">4.3 亏损最低化策略</h3>
+        <p>这里的亏损其实是两笔账：一笔是<strong>钱的亏损</strong>（token、API 调用），另一笔是<strong>机会的损失</strong>（漏报风险，错过干预窗口）。止损的关键是<strong>按风险分层，把贵的算力花在刀刃上</strong>，靠下面四条：</p>
+        <ul class="clean">
+          <li><strong class="hl-x">模型分级路由</strong>：抽信号用小模型（便宜），风险研判用大模型（贵但值得），只在「中置信」时才加跑贵模型——昂贵计算只花在关键判断上。</li>
+          <li><strong class="hl-x">缓存与去重</strong>：上下文抓取去重、RAG 检索结果缓存，压掉重复 API 调用。</li>
+          <li><strong class="hl-x">熔断阈值</strong>：设单任务 token 上限与单日调用次数上限，超限自动降级而非无限重试。</li>
+          <li><strong class="hl-x">漏报优先的止损权衡</strong>：对高净值用户，漏报的代价（「为什么不早告诉我」）远高于误报（多打扰一次），所以低置信不直接砍掉，而是进「观察队列」承接——这是定义清楚「亏损」后的策略选择，而非一味节约。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>五、边界与非目标（本期不做）</h3>
+        <ul class="clean">
+          <li>通用项目管理的工时、甘特图、复杂看板<strong>不做</strong>——这些已有成熟工具，而且它们正是要人喂数据的那类失败样板。</li>
+          <li>自动执行决策（自动发邮件、自动批准）<strong>不做</strong>——PMO 只给建议，最终动作必须人来确认。</li>
+          <li>面向个人的娱乐化 Agent 市场<strong>不做</strong>——这期只做企业级、高净值场景。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>六、开放问题</h3>
+        <ul class="clean">
+          <li>「零录入」体验是否会让用户产生「看不见 Agent 在工作」的信任疑虑？<strong>[待用户访谈验证]</strong></li>
+          <li>飞书/邮件等数据源的接入授权，是否需逐企业申请商业 API 权限？<strong>[待技术确认]</strong></li>
+          <li>PMO 的定价锚点：作为超体会员增值，还是独立订阅？<strong>[待商业评估]</strong></li>
+        </ul>
+      </div>
+    </section>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- PART 2 : 三篇推送 -->
+  <!-- ================================================== -->
+  <div class="part-divider"><span>第二部分 · 内容策划</span></div>
+  <section id="part2">
+    <div class="sec-head">
+      <span class="num">§ 内容</span>
+      <h2>三篇公众号推送：标题与内容概要</h2>
+      <div class="desc">呼应「20% 用户内容 + 80% AI 前沿」的调性，围绕 PMO Skills 的市场首发展开。</div>
+    </div>
+
+    <div class="post">
+      <div class="pindex">POST 01 <span class="pill blue">harness self · 用户痛点</span></div>
+      <h3>追进度正在吃掉老板的一天——你缺的不是下属，是一个不用睡觉的 PMO</h3>
+      <p class="alt">备选标题：<b>「你不是缺 PM，你是缺一个『不用睡觉』的 PMO」</b>（更短、更口语）</p>
+      <div class="slabel">一句话摘要</div>
+      <p class="leadline">从“注意力才是货币”切入，讲创始人一天里最贵的时间其实不是用来做决策，而是耗在追进度上；再引出 AI 可以把这类低杠杆的事彻底接过去。</p>
+      <div class="slabel">内容大纲</div>
+      <ol>
+        <li><b>开场钩子</b><p>从一个创始人真实的一天切入：在飞书群里 @ 人、翻周报、刷会议纪要、一遍遍问“那个供应商到底回没回”。这些事重复又低杠杆，慢慢把决策的脑力耗干了。</p></li>
+        <li><b>核心认知</b><p>时间不是最贵的，注意力才是。追进度耗掉的正是决策者最稀缺的那点东西，而且这件事本来就不该由人来扛。</p></li>
+        <li><b>角色反转</b><p>PMO 说白了就是个信息中转站：收集、比对、上报。而信息中转恰恰是 AI 现在做得最稳的活，比写方案稳得多。</p></li>
+        <li><b>产品引出</b><p>一个不填数据、自己抓、主动报的 AI PMO 是什么样：它坐在你的飞书、邮件、日历里，只有在真需要你的时候才说话。</p></li>
+        <li><b>行动号召</b><p>社区里已经有人公开做了，欢迎 CEO、创始人带着自己的公司来实测。</p></li>
+      </ol>
+      <div class="quote">管理者最贵的成本，是那些本该被系统接走、却一直压在他头上的追问。</div>
+      <div class="cta">招 10 位 CXO 共建超体 PMO，用你真实的项目跑 30 天</div>
+    </div>
+
+    <div class="post">
+      <div class="pindex">POST 02 <span class="pill blue">harness AI · 技术前沿</span></div>
+      <h3>一个 Agent 是秘书，一群 Agent 是组织——我把 PMO 拆成了五个「会分身的专员」</h3>
+      <p class="alt">备选标题：<b>「为什么说单 Agent 是万能秘书、多 Agent 才是职能分工」</b></p>
+      <div class="slabel">一句话摘要</div>
+      <p class="leadline">用“秘书和公司”这个比喻，给非技术出身的高净值用户讲清多智能体架构：AI PMO 不是一个模型唱独角戏，而是一群各管一摊的 Agent 配合。</p>
+      <div class="slabel">内容大纲</div>
+      <ol>
+        <li><b>反问开场</b><p>如果你公司有 PMO，为什么会设这个角色？道理很简单：一个人什么都懂一点，最后什么都盯不住。Agent 也一样。</p></li>
+        <li><b>认知升级</b><p>单个大模型像万能秘书，事一多就乱、就忘、还会编；多智能体是职能分工，每个人只管一件事，上面还有个统筹的。</p></li>
+        <li><b>五个专员拆解</b><p>上下文捕手（读飞书和邮件）、进度哨兵（对计划与实际）、风险雷达（盯停滞和阻塞）、汇报官（三句话简报）、质检红队（拦住编造）。</p></li>
+        <li><b>Skills 市场</b><p>每个专员的能力就是一个可订阅、可授权、可替换的 Skill——这就是企业级 Skills 市场的雏形。</p></li>
+        <li><b>拔高收尾</b><p>Harness AI 给的不是一段脚本，是一套结构。结构对了，剩下的交给 Agent 去填。</p></li>
+      </ol>
+      <div class="quote">真正的 AI 原生组织，不是让 AI 替你开会，而是把信息中转这一步，从你的神经负荷里整个摘掉。</div>
+      <div class="cta">下一篇讲讲，质检红队是怎么拦住一个会编瞎话的 PMO</div>
+    </div>
+
+    <div class="post">
+      <div class="pindex">POST 03 <span class="pill orange">Build in Public · 落地叙事</span></div>
+      <h3>60 天，我造了一个会「主动操心」的 PMO Agent</h3>
+      <p class="alt">备选标题：<b>「我 60 天做出来的 AI PMO，最难的其实不是技术」</b>／<b>「把这条『来的路』摊开给你看」</b></p>
+      <div class="slabel">一句话摘要</div>
+      <p class="leadline">用第一人称复盘 AI PMO 从 0 到 1 的过程，如实讲一句：难的其实不是技术，是让它会主动操心；顺带把社区共建打开。</p>
+      <div class="slabel">内容大纲</div>
+      <ol>
+        <li><b>起点</b><p>作为 AI 原生代，我对“PMO 没人愿意喂数据”体会最深——工具都是死在录入上，这也是所有 PM 软件的通病。</p></li>
+        <li><b>过程实录</b><p>先搭 RAG 企业语料库（Milvus / PGVector），再上 LangGraph 多 Agent 编排，最后复用 grill-me 做质检，一步步把 Demo 变成能用的系统。</p></li>
+        <li><b>最大的教训</b><p>最难的其实不是把 Agent 搭起来，是做到克制：只推 3 条、每条都能溯源、不把老板重新淹在提醒里。</p></li>
+        <li><b>不藏拙</b><p>老实交代两个坎：数据源接入的授权，和“看不见它在干活”的信任问题，再给出现阶段的解法。</p></li>
+        <li><b>社区招募</b><p>正式开放共建，把这段路上的样子摊给你看——每个 Builder 都有可能启发下一个。</p></li>
+      </ol>
+      <div class="quote">每个看着厉害的系统，都是从没那么厉害走过来的。我要做的，是把这条来的路老老实实摊开。</div>
+      <div class="cta">评论区留下你的行业和场景，我挑 10 个真实项目进共建</div>
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- PART 3 : 落地清单 -->
+  <!-- ================================================== -->
+  <div class="part-divider"><span>第三部分 · 技术落地附录</span></div>
+  <section id="part3">
+    <div class="sec-head">
+      <span class="num">§ 附录</span>
+      <h2>Skill 开源落地清单与业务场景</h2>
+      <div class="desc">把 PRD 中的「能力」落到 GitHub 上真实可搜索、可部署的开源项目，再套进三个真实业务场景验证闭环。</div>
+    </div>
+
+    <div class="sec-head" style="margin-top:28px"><span class="num" style="font-size:12px">附录 A</span><h2 style="font-size:22px">可落地开源 Skill 清单</h2><div class="desc">按 PMO Agent 的分工划分，每一层对应一个或多个 GitHub 可搜的成熟开源项目（均可 git clone 或经 MCP 直接接入）。</div></div>
+
+    <div class="layer-note"><b>连接层（MCP）</b> — 对应 RetrievalAgent，解决「信息散落在飞书/钉钉/项目管理工具里」的问题。主流平台几乎都有官方或成熟的开源 MCP Server。</div>
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>开源项目</th><th>GitHub 路径 / 搜索词</th><th>能力</th><th>PMO 角色</th></tr></thead>
+      <tbody>
+        <tr><td>飞书/ Lark 官方 OpenAPI MCP</td><td class="repo"><a href="https://github.com/larksuite/lark-openapi-mcp">larksuite/lark-openapi-mcp</a></td><td>消息、文档、日历、任务、多维表格（官方维护，封装飞书 OpenAPI 为 MCP 工具）</td><td><span class="pill orange">RetrievalAgent</span></td></tr>
+        <tr><td>中国生态 MCP 合集</td><td class="repo">china-mcp-servers</td><td>飞书 / 钉钉 / 企业微信统一接入（社区合集，含群机器人、审批、日程、任务）</td><td><span class="pill orange">RetrievalAgent</span></td></tr>
+        <tr><td>Linear 官方 MCP</td><td class="repo">linear mcp-server</td><td>Issue、Cycle、项目查询与更新（设计/工程团队的进度数据源）</td><td><span class="pill orange">StoryboardAgent</span></td></tr>
+        <tr><td>GitHub 官方 MCP</td><td class="repo"><a href="https://github.com/github/github-mcp-server">github/github-mcp-server</a></td><td>仓库、PR、Issue 读写（研发线项目进度追踪）</td><td><span class="pill orange">StoryboardAgent</span></td></tr>
+        <tr><td>Notion MCP</td><td class="repo">Notion MCP（官方托管版）</td><td>文档与数据库读写（知识库与项目台账）</td><td><span class="pill orange">RetrievalAgent</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="layer-note orange"><b>解析层（PDF / 文档）</b> — 对应 RetrievalAgent 的「非结构化输入」，把财报、BP、合同、周报 PDF 变成结构化文本喂给 RAG。</div>
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>开源项目</th><th>GitHub 路径 / 搜索词</th><th>能力</th><th>PMO 角色</th></tr></thead>
+      <tbody>
+        <tr><td>MinerU</td><td class="repo"><a href="https://github.com/opendatalab/MinerU">opendatalab/MinerU</a></td><td>高精度中文 PDF 解析（30k+ Star），表格/公式/复杂双栏版面 → LLM-ready Markdown</td><td><span class="pill blue">RetrievalAgent</span></td></tr>
+        <tr><td>Docling</td><td class="repo">docling-project/docling</td><td>PDF → Markdown / JSON（IBM 开源），版面理解 + 结构还原</td><td><span class="pill blue">RetrievalAgent</span></td></tr>
+        <tr><td>Marker</td><td class="repo">VikParuchuri/marker</td><td>快速 PDF → Markdown（轻量、适合批量处理）</td><td><span class="pill blue">RetrievalAgent</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="layer-note green"><b>编排与检索层</b> — 对应 OrchestratorAgent 与 QCAgent，是多智能体调度和「避免幻觉」的地基。</div>
+    <div class="table-scroll">
+    <table>
+      <thead><tr><th>开源项目</th><th>GitHub 路径 / 搜索词</th><th>能力</th><th>PMO 角色</th></tr></thead>
+      <tbody>
+        <tr><td>LangGraph</td><td class="repo"><a href="https://github.com/langchain-ai/langgraph">langchain-ai/langgraph</a></td><td>多智能体 DAG 编排，状态机、循环、人工介入（承载多 Agent 协同的主框架）</td><td><span class="pill green">OrchestratorAgent</span></td></tr>
+        <tr><td>Milvus</td><td class="repo"><a href="https://github.com/milvus-io/milvus">milvus-io/milvus</a></td><td>分布式向量数据库（企业级语料库，支撑 RAG 召回）</td><td><span class="pill green">RAG 底座</span></td></tr>
+        <tr><td>pgvector</td><td class="repo"><a href="https://github.com/pgvector/pgvector">pgvector/pgvector</a></td><td>PostgreSQL 向量扩展（轻量场景：直接挂在现有 PG 上）</td><td><span class="pill green">RAG 底座</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="sec-head" style="margin-top:36px"><span class="num" style="font-size:12px">附录 B</span><h2 style="font-size:22px">三个业务场景</h2><div class="desc">每个场景都从「痛点 → 用到的开源项目 → 落地路径 → 预期产出」走一遍，验证 PMO 产品在真实业务里跑得通。</div></div>
+
+    <!-- Scenario A -->
+    <div class="scenario">
+      <div class="shead"><div class="sidx">A</div><div><h3>私募基金 · 投后项目管理</h3><div class="persona">目标用户：P2 私募 / 金融从业者（强 ROI 敏感）</div></div></div>
+      <div class="pain"><b>痛点：</b>投后团队同时盯十几个被投公司，季度财报、BP 更新、里程碑进展散在邮件和 PDF 里。负责人靠记忆和人肉翻邮件，漏一个里程碑就可能错过干预窗口。</div>
+      <div class="flowtitle">落地路径</div>
+      <ol class="flowsteps">
+        <li>用 <code>MinerU</code> 把被投公司发来的季度财报、BP、尽调报告 PDF 解析成结构化 Markdown（表格、财务数字不失真）。</li>
+        <li>写入 <code>Milvus</code> 向量库，为每个被投标的建独立 collection，实现租户级隔离。</li>
+        <li>用 <code>china-mcp-servers</code> 的飞书/钉钉接入，抓取投后群里的里程碑讨论、负责人跟进记录。</li>
+        <li>LangGraph 编排 StoryboardAgent + RouterAgent：比对「财报承诺 vs 实际进展」，命中「连续 2 期未达标」「里程碑沉默超 14 天」等风险规则。</li>
+        <li>ScreenwriterAgent 按标的生成「3 句话投后简报」，QCAgent 做可溯源核查后推送。</li>
+      </ol>
+      <div class="agent-title">该场景用到的智能体（五角色，全部对齐简历命名）</div>
+      <div class="agent-grid">
+        <div class="agent-item"><span class="an">OrchestratorAgent</span><span class="ad">统筹官 · 按标的拆流水线，串起「检索 → 比对 → 简报」</span></div>
+        <div class="agent-item"><span class="an">RetrievalAgent</span><span class="ad">检索官 · MinerU 解析财报/BP PDF，Milvus 为每只标建立独立语料库</span></div>
+        <div class="agent-item"><span class="an">QCAgent</span><span class="ad">质检红队 · 用 risk-tagger 命中「沉默 &gt;14 天」「连续 2 期未达标」</span></div>
+        <div class="agent-item"><span class="an">ScreenwriterAgent</span><span class="ad">撰稿官 · 生成「3 句话投后简报」，结论先行</span></div>
+        <div class="agent-item"><span class="an">RouterAgent</span><span class="ad">路由官 · 监控 PDF 解析失败/超时，降级重试兜底</span></div>
+      </div>
+      <div class="outcome"><b>预期产出：</b>LP 汇报前的「投后风险清单」自动生成，负责人从「人肉翻财报」变成「只看 3 条该操心的标的」。</div>
+    </div>
+
+    <!-- Scenario B -->
+    <div class="scenario">
+      <div class="shead"><div class="sidx">B</div><div><h3>SaaS 创业公司 · CEO 多项目并行</h3><div class="persona">目标用户：P0 创始人 / CXO</div></div></div>
+      <div class="pain"><b>痛点：</b>产品、销售、融资三条线并行，信息全在飞书群和 Linear 里。CEO 每天花 1-2 小时「刷群 + 追进度」，最痛的是不知道「哪条线今天必须我拍板」。</div>
+      <div class="flowtitle">落地路径</div>
+      <ol class="flowsteps">
+        <li><code>larksuite/lark-openapi-mcp</code> 只读接入飞书消息与日历，Linear MCP 接入研发进度。</li>
+        <li>RetrievalAgent 抽取「@ 老板」「等待确认」「blocker」相关的信号，做项目归属判定。</li>
+        <li>StoryboardAgent 比对 Linear 的 Cycle 进度和飞书里的口头承诺，识别「进度撒谎」和「隐性停滞」。</li>
+        <li>RouterAgent 按影响面 + 紧迫度排序，每日只推 <strong>3 条「今日该你操心」</strong>。</li>
+        <li>ScreenwriterAgent 生成结论先行的三句话简报，附来源链接，QCAgent 拦截无溯源条目。</li>
+      </ol>
+      <div class="agent-title">该场景用到的智能体（五角色，全部对齐简历命名）</div>
+      <div class="agent-grid">
+        <div class="agent-item"><span class="an">OrchestratorAgent</span><span class="ad">统筹官 · 产品/销售/融资三线并行，状态机编排</span></div>
+        <div class="agent-item"><span class="an">RetrievalAgent</span><span class="ad">检索官 · 飞书 + Linear 只读接入，抽取「@老板 / 等待确认 / blocker」信号并做项目归属判定</span></div>
+        <div class="agent-item"><span class="an">QCAgent</span><span class="ad">质检红队 · 比对 Linear Cycle 进度 vs 群里的口头承诺，识别「进度撒谎」「隐性停滞」</span></div>
+        <div class="agent-item"><span class="an">ScreenwriterAgent</span><span class="ad">撰稿官 · 生成结论先行的三句话简报，附来源链接</span></div>
+        <div class="agent-item"><span class="an">RouterAgent</span><span class="ad">路由官 · 按影响面 × 紧迫度只留 Top 3，监控 MCP 断连并指数退避重试</span></div>
+      </div>
+      <div class="outcome"><b>预期产出：</b>CEO 每天早上的第一屏只有 3 件事，每件都能点进去看证据，告别「刷群焦虑」。</div>
+    </div>
+
+    <!-- Scenario C -->
+    <div class="scenario">
+      <div class="shead"><div class="sidx">C</div><div><h3>消费品牌 · 供应链履约追踪</h3><div class="persona">目标用户：P1 管理者 / 项目负责人（参考乐纯母公司场景）</div></div></div>
+      <div class="pain"><b>痛点：</b>供应商排期、生产、渠道上架是一个长链路，涉及多方协作。延期常有「人没报、也没人追」，等发现时已经错过档期。</div>
+      <div class="flowtitle">落地路径</div>
+      <ol class="flowsteps">
+        <li>钉钉 MCP（<code>china-mcp-servers</code>）接入供应商沟通群，Notion MCP 接入项目台账。</li>
+        <li>RetrievalAgent 从群聊里抽取「交期」「排产」「上架」等履约关键词，建立履约时间线。</li>
+        <li>StoryboardAgent 对每个履约节点做「计划 vs 实际」比对，超阈值标记「关注/停滞」。</li>
+        <li>RouterAgent 识别「责任人不明」的节点（谁都没接的活），主动提醒。</li>
+        <li>周报由 ScreenwriterAgent 自动汇总，替代人工周会时的逐条对齐。</li>
+      </ol>
+      <div class="agent-title">该场景用到的智能体（五角色，全部对齐简历命名）</div>
+      <div class="agent-grid">
+        <div class="agent-item"><span class="an">OrchestratorAgent</span><span class="ad">统筹官 · 履约长链路多节点编排，串起「抽取 → 比对 → 汇总」</span></div>
+        <div class="agent-item"><span class="an">RetrievalAgent</span><span class="ad">检索官 · 钉钉群抽取「交期 / 排产 / 上架」关键词，建立履约时间线</span></div>
+        <div class="agent-item"><span class="an">QCAgent</span><span class="ad">质检红队 · 逐节点「计划 vs 实际」比对，识别「责任人不明」的节点</span></div>
+        <div class="agent-item"><span class="an">ScreenwriterAgent</span><span class="ad">撰稿官 · 自动汇总周报，替代周会逐条对齐</span></div>
+        <div class="agent-item"><span class="an">RouterAgent</span><span class="ad">路由官 · 监控群聊数据源异常，兜底降级</span></div>
+      </div>
+      <div class="outcome"><b>预期产出：</b>延期从「事后才发现」变成「提前 14 天预警」，周会从 60 分钟缩短到 15 分钟。</div>
+    </div>
+
+    <div class="card" style="border-left:4px solid var(--blue)">
+      <h3>落地技巧（为什么这套清单可信）</h3>
+      <ul class="clean">
+        <li>优先选<strong>官方或 30k+ Star</strong>的成熟项目（larksuite 官方 MCP、MinerU、LangGraph、Milvus），避免接一个没人维护的小仓库。</li>
+        <li>中国企业首选 <code>china-mcp-servers</code> 这类中文生态合集，一次覆盖飞书+钉钉+企微，而不是每个平台单独找。</li>
+        <li>全套组件都是<strong>可私有化部署</strong>的，数据留在客户侧，符合高净值用户对数据安全的底线要求。</li>
+        <li>选择器细节不等于产品价值——这套清单的价值在于证明「每个能力都有成熟开源底座可承接」，落地风险低。</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="footer">
+    超体跃迁 · Skills 市场 · PMO 完整交付文档 · 作者 殷南杰（Lesile Yin）· 2026-08-25 · V1.0（共建期）
+  </div>
+</div>
+<script>
+(function(){
+  var bar=document.querySelector('.topbar .progress');
+  var links=[].slice.call(document.querySelectorAll('.topbar nav a'));
+  var secs=['part1','part2','part3'].map(function(id){return document.getElementById(id);});
+  function onScroll(){
+    var st=window.scrollY;
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    if(bar) bar.style.width=(h>0?(st/h*100):0)+'%';
+    var cur='';
+    secs.forEach(function(s){ if(s && s.getBoundingClientRect().top<=120) cur=s.id; });
+    links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')==='#'+cur); });
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
+<script>
+(function(){
+  var shield=document.getElementById('shotShield');
+  var timer=null;
+  function warn(msg){
+    if(shield){
+      var m=shield.querySelector('.m');
+      if(m&&msg) m.textContent=msg;
+      shield.classList.add('show');
+      document.body.classList.add('blur-on');
+    }
+    if(timer) clearTimeout(timer);
+    timer=setTimeout(function(){
+      if(shield) shield.classList.remove('show');
+      document.body.classList.remove('blur-on');
+    },2800);
+  }
+  document.addEventListener('contextmenu',function(e){e.preventDefault();});
+  document.addEventListener('dragstart',function(e){e.preventDefault();});
+  document.addEventListener('keydown',function(e){
+    var k=e.key||'';
+    var shift=e.shiftKey, meta=e.metaKey, ctrl=e.ctrlKey;
+    if(meta&&shift&&(k==='3'||k==='4'||k==='5')){
+      e.preventDefault(); warn('检测到截屏快捷键，已临时模糊');
+    } else if(k==='PrintScreen'||k==='PrtScn'||k==='Print'){
+      e.preventDefault(); warn('检测到截屏操作，已临时模糊');
+    } else if((meta||ctrl)&&shift&&(k==='s'||k==='S')){
+      e.preventDefault(); warn('检测到截图工具，已临时模糊');
+    }
+  });
+})();
+</script>
+</body>
+</html>
